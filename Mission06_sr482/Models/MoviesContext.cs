@@ -8,6 +8,7 @@ namespace Mission06_sr482.Models
 {
     public class MoviesContext : DbContext
     {
+        // Connecting to Db
         public MoviesContext (DbContextOptions<MoviesContext> options) : base (options)
         {
 
@@ -15,6 +16,7 @@ namespace Mission06_sr482.Models
 
         public DbSet<ApplicationResponse> responses { get; set; }
 
+        //Seeding data entries
         protected override void OnModelCreating(ModelBuilder mb)
         {
             mb.Entity<ApplicationResponse>().HasData(

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Mission06_sr482.Models
 {
+    // Model for movies
     public class ApplicationResponse
     {
+        // Movie characteristics w/ validation
         [Key]
         [Required]
         public int MovieID { get; set; }
