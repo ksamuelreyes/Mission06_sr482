@@ -16,7 +16,7 @@
         <input asp-for="Title" /><br />
 
         <label asp-for="Year">Year</label>
-        <input asp-for="Year" min="0"/><br />
+        <input asp-for="Year" min="0" /><br />
 
         <label asp-for="Director">Director</label>
         <input asp-for="Director" /><br />
@@ -29,12 +29,15 @@
             <option value="R">R</option>
         </select><br />
 
+        <label asp-for="Lent">Lent To</label>
+        <input asp-for="Lent" /><br />
 
         <label asp-for="Notes">Notes</label>
         <input asp-for="Notes" /><br />
 
         <label asp-for="Edited">Edited</label>
         <input asp-for="Edited" /><br />
+
 
         <button type="submit">Submit</button>
     </form>
