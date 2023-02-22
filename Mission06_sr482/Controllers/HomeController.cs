@@ -91,10 +91,18 @@ namespace Mission06_sr482.Controllers
             }
 
         }
-        public IActionResult Delete()
+        [HttpGet]
+        public IActionResult Delete(int movieid)
         {
-            return View();
+            var movie = _MoviesContext.responses.Single(x => x.MovieID == movieid);
+            return View(movie);
         }
-
+        [HttpPost]
+        public IActionResult Delete(ApplicationResponse ar)
+        {
+            _MoviesContext.responses.Remove(ar);
+            _MoviesContext.SaveChanges();
+            return RedirectToAction("MovieTable");
+        }
     }
 }
