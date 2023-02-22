@@ -31,6 +31,8 @@ namespace Mission06_sr482.Controllers
             return View();
         }
 
+        // Add actions
+
         [HttpGet]
         public IActionResult Movies()
         {
@@ -65,6 +67,9 @@ namespace Mission06_sr482.Controllers
 
 
         }
+
+        // Edit actions
+
         [HttpGet]
         public IActionResult Edit(int movieid)
         {
@@ -91,6 +96,8 @@ namespace Mission06_sr482.Controllers
             }
 
         }
+        //Delete actions
+
         [HttpGet]
         public IActionResult Delete(int movieid)
         {
