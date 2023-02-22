@@ -49,9 +49,21 @@ namespace Mission06_sr482.Controllers
         [HttpPost]
         public IActionResult Movies(ApplicationResponse ar)
         {
-            _MoviesContext.Add(ar);
-            _MoviesContext.SaveChanges();
-            return View("Confirmation", ar);
+            if (ModelState.IsValid)
+            {
+                _MoviesContext.Add(ar);
+                _MoviesContext.SaveChanges();
+
+                return View("Confirmation", ar);
+            }
+            else
+            {
+                ViewBag.Categories = _MoviesContext.Categories.ToList();
+
+                return View(ar);
+            }
+
+
         }
         [HttpGet]
         public IActionResult Edit(int movieid)
@@ -74,7 +86,8 @@ namespace Mission06_sr482.Controllers
             }
             else
             {
-                return View(ar);
+                ViewBag.Categories = _MoviesContext.Categories.ToList();
+                return View("Movies");
             }
 
         }

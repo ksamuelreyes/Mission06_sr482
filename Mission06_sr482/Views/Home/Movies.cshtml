@@ -11,6 +11,8 @@
     <form method="post">
         @*Inputs for each movie characteristic*@
 
+        <div asp-validation-summary="All"></div>
+
         <label asp-for="CategoryID">Category</label>
         <select asp-for="CategoryID">
             @foreach (Category m in ViewBag.Categories)
