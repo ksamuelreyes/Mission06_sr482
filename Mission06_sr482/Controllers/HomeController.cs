@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission06_sr482.Models;
 using System;
@@ -12,12 +13,11 @@ namespace Mission06_sr482.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+
         private MoviesContext _MoviesContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, MoviesContext movies)
+        public HomeController(MoviesContext movies)
         {
-            _logger = logger;
             _MoviesContext = movies;
         }
 
@@ -34,7 +34,16 @@ namespace Mission06_sr482.Controllers
         [HttpGet]
         public IActionResult Movies()
         {
+            ViewBag.Categories = _MoviesContext.Categories.ToList();
+ 
+
             return View();
+        }
+        public IActionResult MovieTable()
+        {
+            var applications = _MoviesContext.responses.Include(x => x.Category).ToList();
+
+            return View(applications);
         }
 
         [HttpPost]
@@ -44,12 +53,35 @@ namespace Mission06_sr482.Controllers
             _MoviesContext.SaveChanges();
             return View("Confirmation", ar);
         }
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult Edit(int movieid)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ViewBag.Categories = _MoviesContext.Categories.ToList();
+
+            var application = _MoviesContext.responses.Single(x => x.MovieID == movieid);
+
+            return View("Movies", application);
         }
+        [HttpPost]
+        public IActionResult Edit(ApplicationResponse ar)
+        {
+            if (ModelState.IsValid)
+            {
+                _MoviesContext.Update(ar);
+                _MoviesContext.SaveChanges();
+
+                return RedirectToAction("MovieTable", ar);
+            }
+            else
+            {
+                return View(ar);
+            }
+
+        }
+        public IActionResult Delete()
+        {
+            return View();
+        }
+
     }
 }

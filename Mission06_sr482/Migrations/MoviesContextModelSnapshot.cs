@@ -21,9 +21,8 @@ namespace Mission06_sr482.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -52,13 +51,15 @@ namespace Mission06_sr482.Migrations
 
                     b.HasKey("MovieID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             MovieID = 1,
-                            Category = "Action",
+                            CategoryID = 1,
                             Director = "Guillermo Del Toro",
                             Edited = false,
                             Lent = "",
@@ -70,7 +71,7 @@ namespace Mission06_sr482.Migrations
                         new
                         {
                             MovieID = 2,
-                            Category = "Sci-Fi",
+                            CategoryID = 3,
                             Director = "Christopher Nolan",
                             Edited = false,
                             Lent = "",
@@ -82,7 +83,7 @@ namespace Mission06_sr482.Migrations
                         new
                         {
                             MovieID = 3,
-                            Category = "Action",
+                            CategoryID = 1,
                             Director = "Ryan Coogler",
                             Edited = false,
                             Lent = "",
@@ -91,6 +92,71 @@ namespace Mission06_sr482.Migrations
                             Title = "Black Panther",
                             Year = 2018
                         });
+                });
+
+            modelBuilder.Entity("Mission06_sr482.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Horror"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Romance"
+                        },
+                        new
+                        {
+                            CategoryID = 7,
+                            CategoryName = "Thriller"
+                        },
+                        new
+                        {
+                            CategoryID = 8,
+                            CategoryName = "Science Fiction"
+                        });
+                });
+
+            modelBuilder.Entity("Mission06_sr482.Models.ApplicationResponse", b =>
+                {
+                    b.HasOne("Mission06_sr482.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
